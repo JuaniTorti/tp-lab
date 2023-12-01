@@ -7,6 +7,8 @@
 
     <link rel="stylesheet" href="css/common.css" />
     <link rel="stylesheet" href="css/pages/paso.css">
+    <script src="js/pages/generales.js" defer></script>
+
 </head>
 
 <body>
@@ -19,12 +21,12 @@
         </div>
         <!--Seleccion de opciones-->
         <nav>
-            <div>
-                <select name="seleccionable" class="seleccionable" id="select-anio">
-                    <option disabled selected value="0">Año</option>
+            <div >
+                <select name="seleccionable" class="seleccionable" id="select-anio" onchange="FuncionComboCargo()" > <!-- Invocacion y Validacion en onchange de seleccion de anio--> 
+                    <option  disabled selected value="0" >Año </option>
                 </select>
 
-                <select name="seleccionable" class="seleccionable" id="select-cargo">
+                <select name="seleccionable" class="seleccionable" id="select-cargo" onchange="FuncionComboDistrito()"> <!--Invocacion y Validacion en onchange de seleccion de Cargo-->
                     <option disabled selected value="0">Cargo</option>
                 </select>
 
