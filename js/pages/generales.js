@@ -46,6 +46,8 @@ FuncionComboAnio() //se invoca la funcion para cargar los años e inciar la sele
 
 async function FuncionComboCargo() {
     LimpiarCarga(comboCargo)
+    LimpiarCarga(comboDistrito)
+    LimpiarCarga(comboSeccion)
     
     try {
         console.log(comboAnio.value);
@@ -84,12 +86,17 @@ function LimpiarCarga(combo) { //funcion para limpiar los combos caundo se cambi
     for (var i = combo.length - 1; i > 0; i--) {
         combo.remove(i);
     }
+
+    // Establece la opción predeterminada como seleccionada
+    combo.selectedIndex = 0;
+
 }
 
 
 
 function FuncionComboDistrito() {
-    LimpiarCarga(comboDistrito);
+    LimpiarCarga(comboDistrito)
+    LimpiarCarga(comboSeccion)
 
     for (i = 0; i < datosCargos.length; i++) {
         if (datosCargos[i].IdCargo == comboCargo.value) { // Se recorre la informacion de los cargos hasta encontrar el cargo seleccionado
