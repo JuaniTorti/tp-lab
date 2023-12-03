@@ -19,6 +19,7 @@ async function FuncionComboAnio() {
 
         if (promesa.status == 200) { //si la promesa se resolvio sin problemas
             var datos = await promesa.json();
+            console.log("Años para seleccionar")
             console.log(datos); //se muestran los datos obtenidos
 
             datos.forEach(anio => { //por cada año en la lista
@@ -48,7 +49,7 @@ async function FuncionComboCargo() {
     LimpiarCarga(comboCargo)
     LimpiarCarga(comboDistrito)
     LimpiarCarga(comboSeccion)
-    
+
     try {
         console.log(comboAnio.value);
         var promesa = await fetch("https://resultados.mininterior.gob.ar/api/menu?año=" + comboAnio.value);
@@ -56,11 +57,15 @@ async function FuncionComboCargo() {
 
         if (promesa.status == 200) { //si la promesa se resolvio sin problemas
             var datos = await promesa.json();
+            console.log("Cargos de ese año en distintas elecciones")
             console.log(datos); //se muestran los datos obtenidos
 
             datos.forEach(eleccion => {
                 if (eleccion.IdEleccion === tipoEleccion) {
                     datosCargos = eleccion.Cargos; //se guradan datos de cargos de ese año para conocer distritos y secciones de cada uno
+                    console.log("Cargos del año seleccionado y en la eleccion situada")
+                    console.log(datosCargos)
+
                     eleccion.Cargos.forEach(cargo => {
                         var option = document.createElement("option");
                         option.innerText = cargo.Cargo; // contiene el nombre del cargo
@@ -100,8 +105,10 @@ function FuncionComboDistrito() {
 
     for (i = 0; i < datosCargos.length; i++) {
         if (datosCargos[i].IdCargo == comboCargo.value) { // Se recorre la informacion de los cargos hasta encontrar el cargo seleccionado
-           
+
             datosDistritos = datosCargos[i].Distritos; //guardo los datos de los distritos para la carga de secciones
+            console.log("Distritos del cargo seleccionado")
+            console.log(datosDistritos)
 
             datosCargos[i].Distritos.forEach(distrito => { //para cada distrito del cargo seleccionado
                 var option = document.createElement("option");
@@ -114,3 +121,21 @@ function FuncionComboDistrito() {
 }
 
 
+function FuncionComboSeccion() {
+    LimpiarCarga(comboSeccion)
+
+    for (i = 0; i < datosDistritos.length; i++) {
+        if (datosDistritos[i].IdDistrito == comboDistrito.value) { // Se recorre la informacion de los distritos hasta encontrar el distrito seleccionado
+            console.log("Secciones del distrito selecionado")
+            console.log(datosDistritos[i].SeccionesProvinciales[0].Secciones)
+
+            datosDistritos[i].SeccionesProvinciales[0].Secciones.forEach(seccion => { //para cada cada seccion del distrito seleccionado
+                var option = document.createElement("option");
+                option.innerText = seccion.Seccion; // contiene el nombre de la seccion
+                option.value = seccion.IdSeccion; // contiene el Id de la seccion
+                comboSeccion.appendChild(option);
+            })
+        }
+
+    }
+}
