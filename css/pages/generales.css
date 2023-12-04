@@ -9,18 +9,15 @@ header nav {
     border-radius: 5px;
     background-color: var(--gris-claro);
     padding: 8px;
+    font: #FFF;
     font-size: 10px;
     text-align: center;
     padding-left: 20px;
     padding-right: 20px;
 }
-#boton-inicio a {
-    font-size: 10px;
-    font: #FFF;
-    text-align: center;
-}
+
 #boton-inicio:hover {
-    background-color: var(--textos);
+    background-color: #5e5b5b;
 }
 
 nav div {
@@ -44,16 +41,18 @@ nav div {
 }
 
 .boton-filtrar {
-    background-color: white;
+    background-color: rgb(209, 209, 209);
     border-radius: 15px;
-    padding: 5px;
+    padding: 5px 20px;
     color: var(--textos);
     font: #FFF;
     font-size: 10px;
     text-align: center;
-    padding-left: 15px;
-    padding-right: 15px;
     margin-right: 5px;
+}
+
+.boton-filtrar:hover {
+    background-color: var(--gris-claro);
 }
 
 /*nav div select {
@@ -159,12 +158,16 @@ main {
     text-align: center;
     padding-top: 8px;
     padding-bottom: 8px;
+    border: solid 1px black;
     border-radius: 5px;
-    border: none;
     margin-left: 40px;
     margin-top: 50px;
     padding-left: 40px;
     padding-right: 40px;
+}
+
+#agregar-informe:hover {
+    background-color: var(#e41212);
 }
 
 .cuadros-detalle {

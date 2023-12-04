@@ -21,19 +21,19 @@
         <!--Barra de menú principal-->
         <nav>
             <div>
-                <select name="seleccionable" class="seleccionable" id="select-anio" onchange="comboCargo()">
+                <select name="seleccionable" class="seleccionable" id="select-anio" onchange="FuncionComboCargo()" style="width: 100px;">
                     <option disabled selected value="0">Año</option>
                 </select>
 
-                <select name="seleccionable" class="seleccionable" id="select-cargo" onchange="comboDistrito()">
+                <select name="seleccionable" class="seleccionable" id="select-cargo" onchange="FuncionComboDistrito()" style="width: 150px;">
                     <option disabled selected value="0">Cargo</option>
                 </select>
 
-                <select name="seleccionable" class="seleccionable" id="select-distrito">
+                <select name="seleccionable" class="seleccionable" id="select-distrito" style="width: 150px;" onchange="FuncionComboSeccion()">
                     <option disabled selected value="0">Distrito</option>
                 </select>
 
-                <select name="seleccionable" class="seleccionable" id="select-seccion">
+                <select name="seleccionable" class="seleccionable" id="select-seccion" style="width: 150px;">
                     <option disabled selected value="0">Seccion</option>
                 </select>
 
@@ -44,9 +44,7 @@
                     <a class="active" href="informes.html">INFORMES</a>
                 </button>
             </div>
-            <button id="boton-inicio">
-                <a class="active" href="index.html">INICIO</a>
-            </button>
+            <a class="active" href="index.html" id="boton-inicio">INICIO</a>
         </nav>
     </header>
     <!-- Contenido principal de la página -->
