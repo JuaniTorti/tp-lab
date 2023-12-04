@@ -122,12 +122,12 @@ function FuncionComboDistrito() {
 
 
 function FuncionComboSeccion() {
-    LimpiarCarga(comboSeccion)
+    LimpiarCarga(comboSeccion);
 
     for (i = 0; i < datosDistritos.length; i++) {
         if (datosDistritos[i].IdDistrito == comboDistrito.value) { // Se recorre la informacion de los distritos hasta encontrar el distrito seleccionado
-            console.log("Secciones del distrito selecionado")
-            console.log(datosDistritos[i].SeccionesProvinciales[0].Secciones)
+            console.log("Secciones del distrito selecionado");
+            console.log(datosDistritos[i].SeccionesProvinciales[0].Secciones);
 
             datosDistritos[i].SeccionesProvinciales[0].Secciones.forEach(seccion => { //para cada cada seccion del distrito seleccionado
                 var option = document.createElement("option");
@@ -137,5 +137,47 @@ function FuncionComboSeccion() {
             })
         }
 
+    }
+}
+
+
+async function FuncionFiltrar(){
+
+    var txt_verde = document.getElementById("texto-verde")
+    var txt_amarillo = document.getElementById("texto-amarillo")
+    var txt_rojo = document.getElementById("texto-rojo")
+
+   
+    try{
+        if(comboAnio.value != "" && comboCargo.value != "" && comboDistrito.value != "" && comboSeccion.value != ""){
+    
+            var categoriaId = datosCargos[comboCargo.value - 1]._id
+            var distritoId = datosDistritos[comboDistrito.value]._id
+            var seccionId = datosDistritos[comboDistrito.value].SeccionesProvinciales[0].Secciones[comboSeccion.value - 1]._id
+
+            console.log(categoriaId)
+            console.log(distritoId)
+            console.log(seccionId)
+
+            txt_amarillo.style.visibility = "hidden" //se elimina el cartel por si antes se mostro y ahora esta bien la operacion
+            txt_rojo.style.visibility = "hidden"
+
+            var promesa = await fetch(`https://resultados.mininterior.gob.ar/api/resultados/getResultados?anioEleccion=${comboAnio.value}&tipoRecuento=${tipoRecuento}&tipoEleccion=${tipoEleccion}&categoriaId=${categoriaId}&distritoId=${distritoId}&seccionProvincialId=null&seccionId=${seccionId}&circuitoId=""&mesaId=""`);
+            console.log(promesa);
+            if(promesa.status == 200){
+                var datos = await promesa.json();
+                console.log(datos)
+            }
+            else{
+                txt_rojo.style.visibility = "visible" //muestro cartel rojo
+            }
+        }
+        else{
+            txt_amarillo.innerText = "Complete todos los campos solicitados"
+            txt_amarillo.style.visibility = "visible" //muestro cartel amarillo
+        }
+    }
+    catch(err){
+        console.log(err);
     }
 }

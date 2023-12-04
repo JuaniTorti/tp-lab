@@ -140,10 +140,13 @@ a{
 
 #texto-verde {
   background-color: var(--mensaje-usuario-verde);
+  visibility: hidden;
 }
 #texto-rojo {
   background-color: var(--mensaje-usuario-rojo);
+  visibility: hidden;
 }
 #texto-amarillo {
   background-color: var(--mensaje-usuario-amarillo);
+  visibility: hidden;
 }

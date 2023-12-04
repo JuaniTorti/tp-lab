@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="css/common.css" />
     <link rel="stylesheet" href="css/pages/generales.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="js/pages/generales.js" defer></script>
 
 </head>
@@ -23,22 +24,22 @@
         <nav>
             <div >
                 <select name="seleccionable" class="seleccionable" id="select-anio" style="width: 100px;" onchange="FuncionComboCargo()" > <!-- Invocacion y Validacion en onchange de seleccion de anio--> 
-                    <option  disabled selected value="0" >Año </option>
+                    <option  disabled selected value="" >Año </option>
                 </select>
 
                 <select name="seleccionable" class="seleccionable" id="select-cargo" onchange="FuncionComboDistrito()" style="width: 150px;"> <!--Invocacion y Validacion en onchange de seleccion de Cargo-->
-                    <option disabled selected value="0">Cargo</option>
+                    <option disabled selected value="">Cargo</option>
                 </select>
 
                 <select name="seleccionable" class="seleccionable" id="select-distrito" style="width: 150px;" onchange="FuncionComboSeccion()">
-                    <option disabled selected value="0">Distrito</option>
+                    <option disabled selected value="">Distrito</option>
                 </select>
 
                 <select name="seleccionable" class="seleccionable" id="select-seccion" style="width: 150px;">
-                    <option disabled selected value="0">Seccion</option>
+                    <option disabled selected value="">Seccion</option>
                 </select>
 
-                <button class="boton-filtrar">
+                <button class="boton-filtrar" onclick="FuncionFiltrar()">
                     FILTRAR
                 </button>
                 <button id="boton-informes">
