@@ -101,10 +101,14 @@ nav div select {
 }
 
 .seleccionable {
+    width: 10px;
+    padding-left: 20px;
     background-color: var(--fondo-Menu);
     color: var(--celeste);
     border: none;
     margin-left: 5px;
+    margin-right: 20px;
+    height: 30px;
 }
 
 label {

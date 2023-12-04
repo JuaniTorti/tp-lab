@@ -68,7 +68,7 @@ nav div {
     background-color: var(--fondo-Menu);
     color: var(--celeste);
     border: none;
-    margin-left: 20px;
+    margin-left: 5px;
     margin-right: 20px;
     height: 30px;
 }
