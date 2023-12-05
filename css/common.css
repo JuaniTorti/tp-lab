@@ -141,12 +141,19 @@ a{
 #texto-verde {
   background-color: var(--mensaje-usuario-verde);
   visibility: hidden;
+  font-family: sans-serif;
+  color: black;
 }
 #texto-rojo {
   background-color: var(--mensaje-usuario-rojo);
   visibility: hidden;
+  font-family: sans-serif;
+  color: black;
 }
 #texto-amarillo {
   background-color: var(--mensaje-usuario-amarillo);
   visibility: hidden;
+  position: absolute;
+  font-family: sans-serif;
+  color: black;
 }

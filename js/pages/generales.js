@@ -124,19 +124,21 @@ function FuncionComboDistrito() {
 function FuncionComboSeccion() {
     LimpiarCarga(comboSeccion);
 
-    for (i = 0; i < datosDistritos.length; i++) {
-        if (datosDistritos[i].IdDistrito == comboDistrito.value) { // Se recorre la informacion de los distritos hasta encontrar el distrito seleccionado
-            console.log("Secciones del distrito selecionado");
-            console.log(datosDistritos[i].SeccionesProvinciales[0].Secciones);
-
-            datosDistritos[i].SeccionesProvinciales[0].Secciones.forEach(seccion => { //para cada cada seccion del distrito seleccionado
-                var option = document.createElement("option");
-                option.innerText = seccion.Seccion; // contiene el nombre de la seccion
-                option.value = seccion.IdSeccion; // contiene el Id de la seccion
-                comboSeccion.appendChild(option);
-            })
+    if(comboDistrito.value != 0){
+        for (i = 0; i < datosDistritos.length; i++) {
+            if (datosDistritos[i].IdDistrito == comboDistrito.value) { // Se recorre la informacion de los distritos hasta encontrar el distrito seleccionado
+                console.log("Secciones del distrito selecionado");
+                console.log(datosDistritos[i].SeccionesProvinciales[0].Secciones);
+    
+                datosDistritos[i].SeccionesProvinciales[0].Secciones.forEach(seccion => { //para cada cada seccion del distrito seleccionado
+                    var option = document.createElement("option");
+                    option.innerText = seccion.Seccion; // contiene el nombre de la seccion
+                    option.value = seccion.IdSeccion; // contiene el Id de la seccion
+                    comboSeccion.appendChild(option);
+                })
+            }
+    
         }
-
     }
 }
 
@@ -149,35 +151,85 @@ async function FuncionFiltrar(){
 
    
     try{
-        if(comboAnio.value != "" && comboCargo.value != "" && comboDistrito.value != "" && comboSeccion.value != ""){
+        if(comboAnio.value != "" && comboCargo.value != "" && comboDistrito.value != "" && validarSeccion()){
     
-            var categoriaId = datosCargos[comboCargo.value - 1]._id
-            var distritoId = datosDistritos[comboDistrito.value]._id
-            var seccionId = datosDistritos[comboDistrito.value].SeccionesProvinciales[0].Secciones[comboSeccion.value - 1]._id
-
-            console.log(categoriaId)
-            console.log(distritoId)
-            console.log(seccionId)
+            let anioEleccion = comboAnio.value;
+            let categoriaId = comboCargo.value;
+            let distritoId = comboDistrito.value;
+            let seccionProvincialId = comboSeccion.value;
+            let seccionId = comboSeccion.value;
+            let circuitoId = '';
+            let mesaId = '';
 
             txt_amarillo.style.visibility = "hidden" //se elimina el cartel por si antes se mostro y ahora esta bien la operacion
             txt_rojo.style.visibility = "hidden"
 
-            var promesa = await fetch(`https://resultados.mininterior.gob.ar/api/resultados/getResultados?anioEleccion=${comboAnio.value}&tipoRecuento=${tipoRecuento}&tipoEleccion=${tipoEleccion}&categoriaId=${categoriaId}&distritoId=${distritoId}&seccionProvincialId=null&seccionId=${seccionId}&circuitoId=""&mesaId=""`);
+            var promesa = await fetch(`https://resultados.mininterior.gob.ar/api/resultados/getResultados?anioEleccion=${anioEleccion}&tipoRecuento=${tipoRecuento}&tipoEleccion=${tipoEleccion}&categoriaId=${categoriaId}&distritoId=${distritoId}&seccionId=${seccionId}&circuitoId=${circuitoId}&mesaId=${mesaId}`);
             console.log(promesa);
             if(promesa.status == 200){
                 var datos = await promesa.json();
                 console.log(datos)
+                CambiarTituloSubtitulo(datos)
             }
             else{
+                CambiarTituloSubtitulo()
                 txt_rojo.style.visibility = "visible" //muestro cartel rojo
             }
         }
         else{
-            txt_amarillo.innerText = "Complete todos los campos solicitados"
+            txt_amarillo.innerText = "Complete todos los campos solicitados porfavor"
             txt_amarillo.style.visibility = "visible" //muestro cartel amarillo
         }
     }
     catch(err){
         console.log(err);
+    }
+}
+
+//se muestra el cartel indicativo y se esconden graficos y titulos
+document.getElementById("texto-amarillo").innerText = 'Debe seleccionar los valores a filtrar y hacer clic en el botón FILTRAR';
+document.getElementById("texto-amarillo").style.visibility = "visible";
+document.getElementById("texto-amarillo").style.color = "black";
+document.getElementById("sec-titulo").style.visibility = "hidden";
+
+
+//para validar si se selecciona argentina
+function validarSeccion(){
+    if(comboDistrito.value == 0){//si selecciono argentina devuelve tru para que no me diga que falta completar campos
+        return true
+    }
+    if (comboSeccion.value != "") {
+        return true
+    } else {
+        return false
+    }
+}
+
+
+function CambiarTituloSubtitulo(datos = ""){
+    let seccion = document.getElementById("sec-titulo");
+    var txt_amarillo = document.getElementById("texto-amarillo");
+    let eleccion = 0;
+
+    if(tipoEleccion == 1){
+        eleccion = "Paso"
+    }
+    else{
+        eleccion = "Gerenerales"
+    }
+
+    //se modifica titulo y subtitulo con los datos seleccionados
+    seccion.style.visibility = "visible";
+    seccion.innerHTML = `<section id="sec-titulo">
+            <h2>Elecciones ${comboAnio.value} | ${eleccion}</h2>
+            <p class="texto-path">${comboAnio.value} > ${eleccion} > ${comboCargo.options[comboCargo.selectedIndex].textContent} > ${comboDistrito.options[comboDistrito.selectedIndex].textContent} > ${comboSeccion.options[comboSeccion.selectedIndex].textContent}</p>
+        </section>`
+
+    //mostrar carteles correspondientes
+    if(datos != ""){ //si se paso algun dato
+        if(datos.estadoRecuento.cantidadElectores == 0){ //y ese dato no tenia info
+            txt_amarillo.innerText = "No se encontro informacion para la solicitud realizada"
+            txt_amarillo.style.visibility = "visible" //muestro cartel amarillo si no hay datos
+        }
     }
 }
