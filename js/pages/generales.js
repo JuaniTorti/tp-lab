@@ -1,6 +1,8 @@
 const tipoEleccion = 2;
 const tipoRecuento = 1;
 
+const procincias= mapitas() // variable que tiene los iconos
+
 let datosCargos = 0; // datos para la carga de distrito
 let datosDistritos = 0; // datos para la carga de secciones 
 
@@ -10,8 +12,7 @@ let comboCargo = document.getElementById("select-cargo");
 let comboDistrito = document.getElementById("select-distrito");
 let comboSeccion = document.getElementById("select-seccion")
 
-
-
+console.log(procincias)// muestra de provincias en consola de prueba
 async function FuncionComboAnio() {
     try {
         var promesa = await fetch("https://resultados.mininterior.gob.ar/api/menu/periodos");
@@ -233,3 +234,4 @@ function CambiarTituloSubtitulo(datos = ""){
         }
     }
 }
+
