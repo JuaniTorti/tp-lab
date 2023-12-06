@@ -164,10 +164,11 @@ main {
     margin-top: 50px;
     padding-left: 40px;
     padding-right: 40px;
+    align-self: center;
 }
 
-#agregar-informe:hover {
-    background-color: var(#e41212);
+#agreg-inf{
+    display: flex;
 }
 
 .cuadros-detalle {
