@@ -3,6 +3,16 @@ const tipoRecuento = 1;
 
 const provincias = mapitas() // variable que tiene los iconos
 
+let informes = []; //para guardar los informes que agregue el usuario
+localStorage.setItem('informes', JSON.stringify(informes));
+
+let datosInforme = ""; //para guardar los datos filtrados 
+
+//para manejar los carteles
+var txt_verde = document.getElementById("texto-verde")
+var txt_amarillo = document.getElementById("texto-amarillo")
+var txt_rojo = document.getElementById("texto-rojo")
+
 let datosCargos = 0; // datos para la carga de distrito
 let datosDistritos = 0; // datos para la carga de secciones 
 
@@ -12,7 +22,6 @@ let comboCargo = document.getElementById("select-cargo");
 let comboDistrito = document.getElementById("select-distrito");
 let comboSeccion = document.getElementById("select-seccion")
 
-console.log(provincias)// muestra de provincias en consola de prueba
 async function FuncionComboAnio() {
     try {
         var promesa = await fetch("https://resultados.mininterior.gob.ar/api/menu/periodos");
@@ -145,12 +154,6 @@ function FuncionComboSeccion() {
 
 
 async function FuncionFiltrar(){
-
-    var txt_verde = document.getElementById("texto-verde")
-    var txt_amarillo = document.getElementById("texto-amarillo")
-    var txt_rojo = document.getElementById("texto-rojo")
-
-   
     try{
         if(comboAnio.value != "" && comboCargo.value != "" && comboDistrito.value != "" && validarSeccion()){
     
@@ -164,13 +167,16 @@ async function FuncionFiltrar(){
 
             txt_amarillo.style.visibility = "hidden" //se elimina el cartel por si antes se mostro y ahora esta bien la operacion
             txt_rojo.style.visibility = "hidden"
+            txt_verde.style.visibility = "hidden"
 
             var promesa = await fetch(`https://resultados.mininterior.gob.ar/api/resultados/getResultados?anioEleccion=${anioEleccion}&tipoRecuento=${tipoRecuento}&tipoEleccion=${tipoEleccion}&categoriaId=${categoriaId}&distritoId=${distritoId}&seccionId=${seccionId}&circuitoId=${circuitoId}&mesaId=${mesaId}`);
             console.log(promesa);
             if(promesa.status == 200){
                 var datos = await promesa.json();
                 console.log(datos)
+                datosInforme = datos; //se almacenan los datos filtrados para luego poder usarlos en informes.js
                 CambiarTituloSubtitulo(datos)
+                cambiarMapa()
             }
             else{
                 CambiarTituloSubtitulo()
@@ -209,7 +215,6 @@ function validarSeccion(){
 
 function CambiarTituloSubtitulo(datos = ""){
     let seccion = document.getElementById("sec-titulo");
-    var txt_amarillo = document.getElementById("texto-amarillo");
     let eleccion = 0;
 
     if(tipoEleccion == 1){
@@ -235,3 +240,51 @@ function CambiarTituloSubtitulo(datos = ""){
     }
 }
 
+
+function cambiarMapa(){
+    divMapa = document.getElementById("mapa");
+    divMapa.innerHTML = 
+    `
+        <div class="title">${comboDistrito.options[comboDistrito.selectedIndex].textContent}</div>
+        ${provincias[comboDistrito.value]}
+    `
+}
+
+
+function agregarInforme(datosInforme){
+    let informe = {
+        año: comboAnio.value,
+        tipo: 'Generales',
+        recuento: 'Provisorio',
+        cargo: comboCargo.options[comboCargo.selectedIndex].textContent,
+        distrito: comboDistrito.options[comboDistrito.selectedIndex].textContent,
+        seccion: comboSeccion.options[comboSeccion.selectedIndex].textContent,
+        datosInforme: datosInforme
+    };
+
+    var informesLocal = localStorage.getItem('informes');
+    informesLocal = JSON.parse(informesLocal);
+    var enInformes = false;
+
+    for (var i = 0; i < informesLocal.length; i++) {
+        if (JSON.stringify(informesLocal[i]) === JSON.stringify(informe)) {// JSON.sringfy es para convertir el informe en cadena 
+            enInformes = true;
+            break;
+        }
+    }
+
+    if (!enInformes) {
+        informesLocal.push(informe);
+
+        // Guarda el arreglo actualizado en el localStorage
+        localStorage.setItem('informes', JSON.stringify(informesLocal));
+        console.log('informe agregado correctamente');
+        txt_verde.innerText = "Informe agregado con exito!!"
+        txt_verde.style.visibility = "visible"
+    } else {
+
+        txt_amarillo.innerText = "No se puede agregar un informe ya existente"
+        txt_amarillo.style.visibility = "visible"
+        console.log('El JSON ya existe, no se puede agregar.');
+    }
+}
