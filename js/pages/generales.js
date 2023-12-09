@@ -134,12 +134,12 @@ function FuncionComboDistrito() {
 function FuncionComboSeccion() {
     LimpiarCarga(comboSeccion);
 
-    if(comboDistrito.value != 0){
+    if (comboDistrito.value != 0) {
         for (i = 0; i < datosDistritos.length; i++) {
             if (datosDistritos[i].IdDistrito == comboDistrito.value) { // Se recorre la informacion de los distritos hasta encontrar el distrito seleccionado
                 console.log("Secciones del distrito selecionado");
                 console.log(datosDistritos[i].SeccionesProvinciales[0].Secciones);
-    
+
                 datosDistritos[i].SeccionesProvinciales[0].Secciones.forEach(seccion => { //para cada cada seccion del distrito seleccionado
                     var option = document.createElement("option");
                     option.innerText = seccion.Seccion; // contiene el nombre de la seccion
@@ -147,16 +147,16 @@ function FuncionComboSeccion() {
                     comboSeccion.appendChild(option);
                 })
             }
-    
+
         }
     }
 }
 
 
-async function FuncionFiltrar(){
-    try{
-        if(comboAnio.value != "" && comboCargo.value != "" && comboDistrito.value != "" && validarSeccion()){
-    
+async function FuncionFiltrar() {
+    try {
+        if (comboAnio.value != "" && comboCargo.value != "" && comboDistrito.value != "" && validarSeccion()) {
+
             let anioEleccion = comboAnio.value;
             let categoriaId = comboCargo.value;
             let distritoId = comboDistrito.value;
@@ -171,24 +171,28 @@ async function FuncionFiltrar(){
 
             var promesa = await fetch(`https://resultados.mininterior.gob.ar/api/resultados/getResultados?anioEleccion=${anioEleccion}&tipoRecuento=${tipoRecuento}&tipoEleccion=${tipoEleccion}&categoriaId=${categoriaId}&distritoId=${distritoId}&seccionId=${seccionId}&circuitoId=${circuitoId}&mesaId=${mesaId}`);
             console.log(promesa);
-            if(promesa.status == 200){
+            if (promesa.status == 200) {
                 var datos = await promesa.json();
                 console.log(datos)
                 datosInforme = datos; //se almacenan los datos filtrados para luego poder usarlos en informes.js
                 CambiarTituloSubtitulo(datos)
+                cambiarRecuadros(datos)
                 cambiarMapa()
+                cambiarAgrupacionesPoliticas(datos)
+                cambiarBarras(datos)
+                document.getElementById("sec-contenido").style.visibility = "visible"
             }
-            else{
+            else {
                 CambiarTituloSubtitulo()
                 txt_rojo.style.visibility = "visible" //muestro cartel rojo
             }
         }
-        else{
+        else {
             txt_amarillo.innerText = "Complete todos los campos solicitados porfavor"
             txt_amarillo.style.visibility = "visible" //muestro cartel amarillo
         }
     }
-    catch(err){
+    catch (err) {
         console.log(err);
     }
 }
@@ -198,11 +202,12 @@ document.getElementById("texto-amarillo").innerText = 'Debe seleccionar los valo
 document.getElementById("texto-amarillo").style.visibility = "visible";
 document.getElementById("texto-amarillo").style.color = "black";
 document.getElementById("sec-titulo").style.visibility = "hidden";
+document.getElementById("sec-contenido").style.visibility = "hidden"
 
 
 //para validar si se selecciona argentina
-function validarSeccion(){
-    if(comboDistrito.value == 0){//si selecciono argentina devuelve tru para que no me diga que falta completar campos
+function validarSeccion() {
+    if (comboDistrito.value == 0) {//si selecciono argentina devuelve tru para que no me diga que falta completar campos
         return true
     }
     if (comboSeccion.value != "") {
@@ -213,14 +218,14 @@ function validarSeccion(){
 }
 
 
-function CambiarTituloSubtitulo(datos = ""){
+function CambiarTituloSubtitulo(datos = "") {
     let seccion = document.getElementById("sec-titulo");
     let eleccion = 0;
 
-    if(tipoEleccion == 1){
+    if (tipoEleccion == 1) {
         eleccion = "Paso"
     }
-    else{
+    else {
         eleccion = "Gerenerales"
     }
 
@@ -232,8 +237,8 @@ function CambiarTituloSubtitulo(datos = ""){
         </section>`
 
     //mostrar carteles correspondientes
-    if(datos != ""){ //si se paso algun dato
-        if(datos.estadoRecuento.cantidadElectores == 0){ //y ese dato no tenia info
+    if (datos != "") { //si se paso algun dato
+        if (datos.estadoRecuento.cantidadElectores == 0) { //y ese dato no tenia info
             txt_amarillo.innerText = "No se encontro informacion para la solicitud realizada"
             txt_amarillo.style.visibility = "visible" //muestro cartel amarillo si no hay datos
         }
@@ -241,17 +246,78 @@ function CambiarTituloSubtitulo(datos = ""){
 }
 
 
-function cambiarMapa(){
+function cambiarMapa() {
     divMapa = document.getElementById("mapa");
-    divMapa.innerHTML = 
-    `
+    divMapa.innerHTML =
+        `
         <div class="title">${comboDistrito.options[comboDistrito.selectedIndex].textContent}</div>
         ${provincias[comboDistrito.value]}
     `
 }
 
+function cambiarRecuadros(datos) {
+    let mesas = document.getElementById("mesas-escrutadas")
+    let electores = document.getElementById("electores")
+    let participacion = document.getElementById("part-escrutado")
 
-function agregarInforme(datosInforme){
+    mesas.innerHTML = `<img src="img/icons/img1.png" style="width: 70px; margin-right: 10px;"/> <!--Icono urna--> Mesas escrutadas: ${datos.estadoRecuento.mesasTotalizadas}`
+    electores.innerHTML = `<img src="img/icons/img3.png" style="width: 70px; margin-right: 10px;"/> <!--Icono personas-->  Electores: ${datos.estadoRecuento.cantidadElectores}`
+    participacion.innerHTML = `<img src="img/icons/img4.png" style="width: 70px; margin-right: 10px;"/> <!--Icono manos--> Participación sobre escrutado: ${datos.estadoRecuento.participacionPorcentaje}%`
+}
+
+
+
+function cambiarAgrupacionesPoliticas(datos) {
+    let divAgrupaciones = document.getElementById("agrup-politicas")
+    let htmlAgrupaciones =
+        `<div class="title" id="title-agrup-politicas">Agrupaciones Políticas</div>
+        <div class="info-agrupaciones">`
+
+    for (var i = 0; i < datos.valoresTotalizadosPositivos.length; i++) {
+        htmlAgrupaciones +=
+            `<div class="nombre-agrupacion">${datos.valoresTotalizadosPositivos[i].nombreAgrupacion}
+            <hr>
+            </div>`
+
+        if (datos.valoresTotalizadosPositivos[i].listas) { //si hay listas dentro del partido
+            for (var j = 0; datos.valoresTotalizadosPositivos[i].listas.length; j++) {
+                htmlAgrupaciones +=
+                    `<div class="div-agrupaciones">
+                    <div><b>${datos.valoresTotalizadosPositivos[i].listas[j].nombre}</b></div>
+                    <div>${(datos.valoresTotalizadosPositivos[i].listas[j].votos * 100) / datos.estadoRecuento.cantidadVotantes}% <br>${datos.valoresTotalizadosPositivos[i].listas[j].votos} votos</div>
+                </div>
+                <div class="progress" style="background: var(--grafica-amarillo-claro);">
+                    <div class="progress-bar" style="width:75%; background: var(--grafica-amarillo);">
+                        <span class="progress-bar-text">75%</span>
+                    </div>
+                </div>`
+            }
+        }
+        else {// si no hay listas se carga la barra directamente con los datos del partido (falta definir los colores)
+            htmlAgrupaciones +=
+                `<div class="div-agrupaciones">
+                    <div><b></b></div>
+                    <div>${datos.valoresTotalizadosPositivos[i].votosPorcentaje}% <br>${datos.valoresTotalizadosPositivos[i].votos} votos</div>
+                </div><div class="progress" style="background: var(--grafica-amarillo-claro);">
+                    <div class="progress-bar" style="width:75%; background: var(--grafica-amarillo);">
+                        <span class="progress-bar-text">${datos.valoresTotalizadosPositivos[i].votosPorcentaje}%</span>
+                    </div>
+                </div>`
+        }
+    }
+
+    htmlAgrupaciones += `</div>` //para despues de cargar todo
+    divAgrupaciones.innerHTML = htmlAgrupaciones
+}
+
+
+
+function cambiarBarras(datos) {
+
+}
+
+
+function agregarInforme(datosInforme) {
     let informe = {
         año: comboAnio.value,
         tipo: 'Generales',

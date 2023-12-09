@@ -7,7 +7,8 @@
 
     <link rel="stylesheet" href="css/common.css" />
     <link rel="stylesheet" href="css/pages/generales.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="js/pages/generales.js" defer></script>
     <script src="js/pages/mapas.js"></script> <!--no hizo ni falta poner el module ahora que me doy cuenta xd-->
 
@@ -23,16 +24,19 @@
         </div>
         <!--Seleccion de opciones-->
         <nav>
-            <div >
-                <select name="seleccionable" class="seleccionable" id="select-anio" style="width: 100px;" onchange="FuncionComboCargo()" > <!-- Invocacion y Validacion en onchange de seleccion de anio--> 
-                    <option  disabled selected value="" >Año </option>
+            <div>
+                <select name="seleccionable" class="seleccionable" id="select-anio" style="width: 100px;"
+                    onchange="FuncionComboCargo()"> <!-- Invocacion y Validacion en onchange de seleccion de anio-->
+                    <option disabled selected value="">Año </option>
                 </select>
 
-                <select name="seleccionable" class="seleccionable" id="select-cargo" onchange="FuncionComboDistrito()" style="width: 150px;"> <!--Invocacion y Validacion en onchange de seleccion de Cargo-->
+                <select name="seleccionable" class="seleccionable" id="select-cargo" onchange="FuncionComboDistrito()"
+                    style="width: 150px;"> <!--Invocacion y Validacion en onchange de seleccion de Cargo-->
                     <option disabled selected value="">Cargo</option>
                 </select>
 
-                <select name="seleccionable" class="seleccionable" id="select-distrito" style="width: 150px;" onchange="FuncionComboSeccion()">
+                <select name="seleccionable" class="seleccionable" id="select-distrito" style="width: 150px;"
+                    onchange="FuncionComboSeccion()">
                     <option disabled selected value="">Distrito</option>
                 </select>
 
@@ -47,10 +51,10 @@
                     <a class="active" href="informes.html">INFORMES</a>
                 </button>
             </div>
-                <a class="active" href="index.html" id="boton-inicio">INICIO</a>
+            <a class="active" href="index.html" id="boton-inicio">INICIO</a>
         </nav>
     </header>
-  
+
     <main>
         <!--Carteles de anuncio-->
         <section id="sec-messages">
@@ -71,17 +75,17 @@
                 </div>
                 <div class="recuadros-info">
                     <div id="mesas-escrutadas">
-                        <img src="img/icons/img1.png" style="width: 70px; margin-right: 10px;"/> <!--Icono urna-->
+                        <img src="img/icons/img1.png" style="width: 70px; margin-right: 10px;" /> <!--Icono urna-->
                         Mesas escrutadas
                         62.71%
                     </div>
                     <div id="electores">
-                        <img src="img/icons/img3.png" style="width: 70px; margin-right: 10px;"/> <!--Icono personas-->
+                        <img src="img/icons/img3.png" style="width: 70px; margin-right: 10px;" /> <!--Icono personas-->
                         Electores
                         62.71%
                     </div>
                     <div id="part-escrutado">
-                        <img src="img/icons/img4.png" style="width: 70px; margin-right: 10px;"/> <!--Icono manos-->
+                        <img src="img/icons/img4.png" style="width: 70px; margin-right: 10px;" /> <!--Icono manos-->
                         Participación sobre escrutado
                         62.71%
                     </div>
@@ -92,7 +96,12 @@
                     <div class="title" id="title-agrup-politicas">Agrupaciones Políticas</div>
                     <div class="info-agrupaciones">
                         <div>
-                            <div class="nombre-agrupacion">JUNTOS POR EL CAMBIO<hr></div>
+                            <!--Partido-->
+                            <div class="nombre-agrupacion">JUNTOS POR EL CAMBIO
+                                <hr>
+                            </div>
+                            <!---->
+                            <!--Agrupacion de partido-->
                             <div class="div-agrupaciones">
                                 <div><b>JUNTOS</b></div>
                                 <div>38% <br>30000 votos</div>
@@ -102,6 +111,8 @@
                                     <span class="progress-bar-text">75%</span>
                                 </div>
                             </div>
+                            <!---->
+                            <!--Agrupacion de partido-->
                             <div class="div-agrupaciones">
                                 <div><b>PJ</b></div>
                                 <div>20% <br>12000 votos</div>
@@ -111,9 +122,12 @@
                                     <span class="progress-bar-text">15%</span>
                                 </div>
                             </div>
+                            <!---->
                         </div>
                         <div>
-                            <div class="nombre-agrupacion">ECO + VAMOS CORRIENTES<hr></div>
+                            <div class="nombre-agrupacion">ECO + VAMOS CORRIENTES
+                                <hr>
+                            </div>
                             <div class="div-agrupaciones">
                                 <div><b>VERDE</b></div>
                                 <div>38% <br>30000 votos</div>
