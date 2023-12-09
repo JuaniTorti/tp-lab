@@ -191,3 +191,41 @@ const mapasprovincias = [
 
 return mapasprovincias //devuelvo las provincias nomas
 }
+
+
+function coloresPartidos(){
+    let colores = [
+        partido1 = {
+            nombre: "JUNTOS POR EL CAMBIO",
+            color: "rgb(252,210,0)",
+            colorClaro: "rgba(252,210,0,0.3)"
+        },
+        partido2 = {
+            nombre: "UNION POR LA PATRIA",
+            color: "rgb(0,169,232)",
+            colorClaro: "rgba(0,169,232,0.3)"
+        },
+        partido3 = {
+            nombre: "FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD",
+            color: "rgb(171,40,40)",
+            colorClaro: "rgba(171,40,40,0.3)"
+        },
+        partido4 = {
+            nombre: "HACEMOS POR NUESTRO PAIS",
+            color: "rgb(102,171,60)",
+            colorClaro: "rgba(102,171,60,0.3)"
+        },
+        partido5 = {
+            nombre: "LA LIBERTAD AVANZA",
+            color: "rgb(112,76,159)",
+            colorClaro: "rgba(112,76,159,0.3)"
+        },
+        partido6 = {
+            nombre: "OTROS",
+            color: "rgb(128,128,128)",
+            colorClaro: "rgba(128,128,128,0.3)"
+        }
+    ]
+
+    return colores
+}

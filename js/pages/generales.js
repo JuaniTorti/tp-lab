@@ -2,6 +2,7 @@ const tipoEleccion = 2;
 const tipoRecuento = 1;
 
 const provincias = mapitas() // variable que tiene los iconos
+let colorPartidos = coloresPartidos()
 
 let informes = []; //para guardar los informes que agregue el usuario
 localStorage.setItem('informes', JSON.stringify(informes));
@@ -268,12 +269,29 @@ function cambiarRecuadros(datos) {
 
 
 function cambiarAgrupacionesPoliticas(datos) {
+
+    let color = 0
+    let colorClaro = 0//para almacenar los colores que pertenecen a cada partido
+    
     let divAgrupaciones = document.getElementById("agrup-politicas")
     let htmlAgrupaciones =
         `<div class="title" id="title-agrup-politicas">Agrupaciones Políticas</div>
         <div class="info-agrupaciones">`
 
     for (var i = 0; i < datos.valoresTotalizadosPositivos.length; i++) {
+
+        for (var x = 0; x < colorPartidos.length; x++){
+            if(datos.valoresTotalizadosPositivos[i].nombreAgrupacion == colorPartidos[x].nombre){
+                color = colorPartidos[x].color
+                colorClaro = colorPartidos[x].colorClaro
+                break
+            }
+            else{
+                color = colorPartidos[5].color
+                colorClaro = colorPartidos[5].colorClaro
+            }
+        }
+
         htmlAgrupaciones +=
             `<div class="nombre-agrupacion">${datos.valoresTotalizadosPositivos[i].nombreAgrupacion}
             <hr>
@@ -286,9 +304,9 @@ function cambiarAgrupacionesPoliticas(datos) {
                     <div><b>${datos.valoresTotalizadosPositivos[i].listas[j].nombre}</b></div>
                     <div>${(datos.valoresTotalizadosPositivos[i].listas[j].votos * 100) / datos.estadoRecuento.cantidadVotantes}% <br>${datos.valoresTotalizadosPositivos[i].listas[j].votos} votos</div>
                 </div>
-                <div class="progress" style="background: var(--grafica-amarillo-claro);">
-                    <div class="progress-bar" style="width:75%; background: var(--grafica-amarillo);">
-                        <span class="progress-bar-text">75%</span>
+                <div class="progress" style="background: ${colorClaro};">
+                    <div class="progress-bar" style="width:${datos.valoresTotalizadosPositivos[i].votosPorcentaje}%; background: ${color};">
+                        <span class="progress-bar-text">${datos.valoresTotalizadosPositivos[i].votosPorcentaje}%</span>
                     </div>
                 </div>`
             }
@@ -298,8 +316,8 @@ function cambiarAgrupacionesPoliticas(datos) {
                 `<div class="div-agrupaciones">
                     <div><b></b></div>
                     <div>${datos.valoresTotalizadosPositivos[i].votosPorcentaje}% <br>${datos.valoresTotalizadosPositivos[i].votos} votos</div>
-                </div><div class="progress" style="background: var(--grafica-amarillo-claro);">
-                    <div class="progress-bar" style="width:75%; background: var(--grafica-amarillo);">
+                </div><div class="progress" style="background: ${colorClaro};">
+                    <div class="progress-bar" style="width:${datos.valoresTotalizadosPositivos[i].votosPorcentaje}%; background: ${color};">
                         <span class="progress-bar-text">${datos.valoresTotalizadosPositivos[i].votosPorcentaje}%</span>
                     </div>
                 </div>`
@@ -313,7 +331,30 @@ function cambiarAgrupacionesPoliticas(datos) {
 
 
 function cambiarBarras(datos) {
+    let color = ""
+    let divBarras = document.getElementById("barras")
+    let htmlBarras = 
+    `<div class="title">Resumen de votos</div>
+     <div class="grid">`
 
+    for (var i = 0; i < datos.valoresTotalizadosPositivos.length; i++){
+        
+        for (var x = 0; x < colorPartidos.length; x++){
+            if(datos.valoresTotalizadosPositivos[i].nombreAgrupacion == colorPartidos[x].nombre){
+                color = colorPartidos[x].color
+                break
+            }
+            else{
+                color = colorPartidos[5].color
+            }
+        }
+
+        htmlBarras += 
+        `<div class="bar" style="--bar-value:${datos.valoresTotalizadosPositivos[i].votosPorcentaje}%; --bar-color: ${color};"
+        data-name="${datos.valoresTotalizadosPositivos[i].nombreAgrupacion}"></div>`
+    }
+
+    divBarras.innerHTML = htmlBarras 
 }
 
 

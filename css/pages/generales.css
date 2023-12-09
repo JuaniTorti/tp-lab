@@ -233,6 +233,7 @@ main {
 
 #mapa svg {
     display: inline-block;
+    margin-left: 120px;
 }
 
 
@@ -241,6 +242,7 @@ main {
     margin-left: 10px;
     width: 30%;
     margin-bottom: 15px;
+    height: 357px
 }
 
 
