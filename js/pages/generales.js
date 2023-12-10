@@ -4,7 +4,6 @@ const tipoRecuento = 1;
 const provincias = mapitas() // variable que tiene los iconos
 let colorPartidos = coloresPartidos()
 
-
 let datosInforme = ""; //para guardar los datos filtrados y usarlos en agregar informe
 
 //para manejar los carteles
