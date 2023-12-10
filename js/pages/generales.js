@@ -4,10 +4,8 @@ const tipoRecuento = 1;
 const provincias = mapitas() // variable que tiene los iconos
 let colorPartidos = coloresPartidos()
 
-let informes = []; //para guardar los informes que agregue el usuario
-localStorage.setItem('informes', JSON.stringify(informes));
 
-let datosInforme = ""; //para guardar los datos filtrados 
+let datosInforme = ""; //para guardar los datos filtrados y usarlos en agregar informe
 
 //para manejar los carteles
 var txt_verde = document.getElementById("texto-verde")
@@ -358,19 +356,22 @@ function cambiarBarras(datos) {
 }
 
 
-function agregarInforme(datosInforme) {
+function agregarInforme() {
     let informe = {
-        año: comboAnio.value,
-        tipo: 'Generales',
+        anio: comboAnio.value,
+        tipo: 'Generales', //en paso poner Paso
         recuento: 'Provisorio',
         cargo: comboCargo.options[comboCargo.selectedIndex].textContent,
         distrito: comboDistrito.options[comboDistrito.selectedIndex].textContent,
+        svgDistrito: provincias[comboDistrito.value],
         seccion: comboSeccion.options[comboSeccion.selectedIndex].textContent,
-        datosInforme: datosInforme
+        datos: datosInforme
     };
 
+
     var informesLocal = localStorage.getItem('informes');
-    informesLocal = JSON.parse(informesLocal);
+    console.log(informesLocal)
+    informesLocal = JSON.parse(informesLocal);//para transformarlo en un array
     var enInformes = false;
 
     for (var i = 0; i < informesLocal.length; i++) {
@@ -380,7 +381,7 @@ function agregarInforme(datosInforme) {
         }
     }
 
-    if (!enInformes) {
+    if (!enInformes) {//si el informe no esta ya agregado
         informesLocal.push(informe);
 
         // Guarda el arreglo actualizado en el localStorage

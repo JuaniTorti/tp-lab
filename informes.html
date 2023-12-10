@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="css/common.css" />
     <link rel="stylesheet" href="css/pages/informes.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="js/pages/informes.js" defer></script>
+    <script src="js/pages/mapas.js"></script>
 </head>
 
 <body>
@@ -52,9 +54,8 @@
         </section>
         <section id="sec-contenido">
             <!--Seccion para contenido de la página-->
-            <table class="tabla-informes">
+            <table class="tabla-informes" id="informe">
                 <thead>
-
                     <tr>
                         <th>PROVINCIA</th>
                         <th>ELECCIÓN</th>
@@ -62,10 +63,11 @@
                         <th>DATOS POR AGRUPACIÓN</th>
                     </tr>
                 </thead>
+                <!---->
                 <tbody>
                     <tr>
-                        <td>
-                            <!--//Ciudad Autónoma de Buenos Aires//-->
+                        <td id="mapaSvg">
+                            <!--//Ciudad Autónoma de Buenos Aires// mapa-->
                             <svg height="210" width="300">
                                 <path class="leaflet-interactive" stroke="#18a0fb" stroke-opacity="1" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round" fill="#18a0fb" fill-opacity="1"
@@ -79,44 +81,59 @@
                                 75L203 73L206 73L201 71L205 70L199 69L198 68L202 68L200 66L195 67L194 66L198 65L188
                                 62L192 62L190 60L183 59L189 64L187 65z"></path>
                             </svg>
+                            <!---->
                         </td>
-                        <td>
+                        <td id="eleccionesTexto">
+                            <!--titulos-->
                             <p class="texto-elecciones-chico">Elecciones 2020 | Generales</p>
                             <p class="texto-path-chico">2020 > Generales > Provisorio > Senadores Nacionales > BuenoscAires</p>
+                            <!---->
                         </td>
                         <td>
-                            <div class="datos">
+                            <!---->
+                            <div class="datos" id="datos">
+                                <!---->
                                 <div id="mesas-escrutadas">
                                     <img src="img/icons/img1.png" style="width: 50px; margin-right: 10px;" />
                                     Mesas escrutadas
                                     62.71%
                                 </div>
+                                <!---->
+                                <!---->
                                 <div id="electores">
                                     <img src="img/icons/img3.png" style="width: 50px; margin-right: 10px;" />
                                     Electores
                                     62.71%
                                 </div>
+                                <!---->
+                                <!---->
                                 <div id="part-escrutado" style="width: 130px; padding-right: 3px;">
                                     <img src="img/icons/img4.png" style="width: 50px; margin-right: 5px;" />
                                     Participación sobre escrutado
                                     62.71%
                                 </div>
+                                <!---->
                             </div>
                         </td>
-                        <td class="datos-agrupacion">
-                            <div id="div-agrupacion">
+                        <td class="datos-agrupacion" id="div-agrupacion">
+                            <!---->
+                            <div>
+                                <!--agrupacion-->
                                 <div class="agrupacion">
                                     <div><b>Juntos</b></div>
                                     <div>38% <br>30000 votos</div>
                                 </div>
+                                <!---->
                                 <div class="agrupacion">
                                     <div id="agrup-pj"><b>PJ</b></div>
                                     <div>20% <br>12000 votos</div>
                                 </div>
                             </div>
+                            <!---->
                         </td>
                     </tr>
                 </tbody>
+                <!---->
             </table>
         </section>
     </main>
