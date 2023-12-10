@@ -89,6 +89,10 @@ nav div {
     margin-right: 5px;
 }
 
+#agreg-inf{
+    display: flex;
+}
+
 .boton-filtrar:hover {
     background-color: var(--gris-claro);
 }
@@ -193,6 +197,11 @@ main {
     align-items: center;
 }
 
+#mapa svg {
+    display: inline-block;
+    margin-left: 120px;
+}
+
 #agregar-informe {
     background-color: var(--gris-claro);
     color: white;
@@ -206,6 +215,7 @@ main {
     margin-top: 50px;
     padding-left: 40px;
     padding-right: 40px;
+    align-self: center;
 }
 
 #agregar-informe:hover {
@@ -224,6 +234,13 @@ main {
     border-radius: 25px;
     border: 1px var(--borde-Grilla) solid;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+#grafica {
+    margin-left: 10px;
+    width: 30%;
+    margin-bottom: 15px;
+    height: 357px
 }
 
 .title {

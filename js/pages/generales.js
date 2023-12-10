@@ -295,7 +295,7 @@ function cambiarAgrupacionesPoliticas(datos) {
             </div>`
 
         if (datos.valoresTotalizadosPositivos[i].listas) { //si hay listas dentro del partido
-            for (var j = 0; datos.valoresTotalizadosPositivos[i].listas.length; j++) {
+            for (var j = 0; j < datos.valoresTotalizadosPositivos[i].listas.length; j++) {
                 htmlAgrupaciones +=
                     `<div class="div-agrupaciones">
                     <div><b>${datos.valoresTotalizadosPositivos[i].listas[j].nombre}</b></div>
@@ -334,7 +334,7 @@ function cambiarBarras(datos) {
     `<div class="title">Resumen de votos</div>
      <div class="grid">`
 
-    for (var i = 0; i < datos.valoresTotalizadosPositivos.length; i++){
+    for (var i = 0; i < datos.valoresTotalizadosPositivos.length && i < 7; i++){ // menor a 7 para seguir la indicacion de no mas de 7 barras
         
         for (var x = 0; x < colorPartidos.length; x++){
             if(datos.valoresTotalizadosPositivos[i].nombreAgrupacion == colorPartidos[x].nombre){
