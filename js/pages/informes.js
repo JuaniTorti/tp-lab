@@ -88,4 +88,7 @@ else{
     let txtAmarillo = document.getElementById("texto-amarillo")
     txtAmarillo.innerHTML = `<i class="fa fa-exclamation"></i> No existen informes realizados por el usuario`
     txtAmarillo.style.visibility = "visible"
+
+    let contenido = document.getElementById("contenido")
+    contenido.style.visibility = "visible"
 }
