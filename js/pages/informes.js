@@ -90,5 +90,5 @@ else{
     txtAmarillo.style.visibility = "visible"
 
     let contenido = document.getElementById("contenido")
-    contenido.style.visibility = "visible"
+    contenido.style.visibility = "hidden"
 }
