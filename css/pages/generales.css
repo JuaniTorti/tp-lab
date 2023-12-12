@@ -167,6 +167,10 @@ main {
     align-self: center;
 }
 
+#agregar-informe:hover {
+    background-color: rgb(85, 85, 85);
+}
+
 #agreg-inf{
     display: flex;
 }

@@ -217,6 +217,9 @@ main {
     padding-right: 40px;
     align-self: center;
 }
+#agregar-informe:hover {
+    background-color: rgb(85, 85, 85);
+}
 
 #agregar-informe:hover {
     background-color: var(#e41212);
